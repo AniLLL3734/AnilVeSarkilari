@@ -732,6 +732,7 @@
                     </div>
                 </div>
                 <div class="header-actions">
+                    <button class="header-btn" id="refreshBtn" title="Yenile" onclick="refreshSongs()">🔄</button>
                     <button class="header-btn" id="shuffleBtn" title="Karıştır" onclick="toggleShuffle()">🔀</button>
                     <button class="header-btn" id="repeatBtn" title="Tekrarla" onclick="toggleRepeat()">🔁</button>
                 </div>
@@ -854,21 +855,24 @@
         }
 
         // ===== FILE LIST LOADING (with localStorage cache) =====
-        async function loadFileList() {
+        async function loadFileList(forceRefresh = false) {
             // Check local cache first
-            const cached = localStorage.getItem(FILE_LIST_CACHE_KEY);
-            if (cached) {
-                try {
-                    const parsed = JSON.parse(cached);
-                    if (Date.now() - parsed.timestamp < FILE_LIST_CACHE_TTL) {
-                        processFetchedFiles(parsed.data);
-                        return;
-                    }
-                } catch (e) { /* ignore parse errors */ }
+            if (!forceRefresh) {
+                const cached = localStorage.getItem(FILE_LIST_CACHE_KEY);
+                if (cached) {
+                    try {
+                        const parsed = JSON.parse(cached);
+                        if (Date.now() - parsed.timestamp < FILE_LIST_CACHE_TTL) {
+                            processFetchedFiles(parsed.data);
+                            return;
+                        }
+                    } catch (e) { /* ignore parse errors */ }
+                }
             }
 
             try {
-                const response = await fetch(API_URL);
+                const fetchUrl = forceRefresh ? `${API_URL}?t=${Date.now()}` : API_URL;
+                const response = await fetch(fetchUrl);
                 if (!response.ok) throw new Error('API error');
                 const data = await response.json();
                 
@@ -888,6 +892,37 @@
                     </div>
                 `;
             }
+        }
+
+        async function refreshSongs() {
+            const btn = document.getElementById('refreshBtn');
+            if (btn) btn.classList.add('active');
+            
+            songListContainer.innerHTML = `
+                <div class="loading-container">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Şarkılar güncelleniyor...</div>
+                </div>
+            `;
+            
+            await loadFileList(true);
+            
+            const query = searchBar.value.toLowerCase().trim();
+            if (query) {
+                filteredSongs = songs.filter(s => 
+                    s.title.toLowerCase().includes(query) || 
+                    s.artist.toLowerCase().includes(query) ||
+                    s.filename.toLowerCase().includes(query)
+                );
+            } else {
+                filteredSongs = [...songs];
+            }
+            
+            renderSongList(filteredSongs);
+            updateCacheStatus();
+            
+            if (btn) btn.classList.remove('active');
+            showToast('✅ Liste güncellendi!');
         }
 
         function processFetchedFiles(data) {
