@@ -4,8 +4,8 @@ const path = require('path');
 console.log("Şarkı listesi güncelleniyor...");
 
 const dir = __dirname;
-// Mp3 ve resim dosyalarını bul
-const files = fs.readdirSync(dir).filter(f => f.match(/\.(mp3|jpg|jpeg|png|webp)$/i));
+// Sadece MP3 dosyalarını filtrele
+const files = fs.readdirSync(dir).filter(f => f.toLowerCase().endsWith('.mp3'));
 const fileListJson = JSON.stringify(files.map(f => ({name: f})));
 
 // index.html dosyasını oku
