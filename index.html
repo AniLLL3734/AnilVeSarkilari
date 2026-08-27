@@ -1,220 +1,172 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AnÄ±l'Ä±n MÃ¼zik Ã‡alar</title>
-    <meta name="description" content="AnÄ±l'Ä±n kiÅŸisel mÃ¼zik koleksiyonu - Profesyonel mÃ¼zik Ã§alar">
-    <meta name="theme-color" content="#0a0a0f">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Anıl'ın Müzik Çaları - SptfyJam Player</title>
+    <meta name="description" content="Anıl'ın kişisel müzik koleksiyonu - SptfyJam Müzik Çalar">
+    <meta name="theme-color" content="#0a0a0c">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+    
+    <!-- Google Fonts & Lucide Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        /* ===== CSS RESET & ROOT ===== */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a2e;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --bg-glass: rgba(255, 255, 255, 0.06);
-            --bg-glass-hover: rgba(255, 255, 255, 0.1);
-            --text-primary: #f0f0f5;
-            --text-secondary: #8888a0;
-            --text-muted: #555570;
-            --accent: #7c3aed;
-            --accent-light: #a78bfa;
-            --accent-glow: rgba(124, 58, 237, 0.3);
-            --accent-gradient: linear-gradient(135deg, #7c3aed, #ec4899);
-            --success: #10b981;
-            --danger: #ef4444;
-            --border: rgba(255, 255, 255, 0.06);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --radius-xs: 6px;
+            --bg-dark: #0a0a0c;
+            --bg-card: rgba(22, 22, 29, 0.75);
+            --bg-card-hover: rgba(32, 32, 42, 0.85);
+            --accent-green: #1db954;
+            --accent-green-glow: rgba(29, 185, 84, 0.35);
+            --accent-gradient: linear-gradient(135deg, #1db954 0%, #1ed760 50%, #4facfe 100%);
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --border-light: rgba(255, 255, 255, 0.08);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 8px;
+            --shadow-glow: 0 10px 30px -10px rgba(29, 185, 84, 0.3);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
-        html { 
-            scroll-behavior: smooth; 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            overflow-x: hidden;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
             min-height: 100dvh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(29, 185, 84, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(142, 45, 226, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            padding-bottom: calc(130px + var(--safe-bottom));
         }
 
-        /* ===== ANIMATED BACKGROUND ===== */
-        .bg-ambient {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .bg-ambient .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-        .bg-ambient .orb:nth-child(1) {
-            width: 400px; height: 400px;
-            background: #7c3aed;
-            top: -100px; left: -100px;
-            animation-delay: 0s;
-        }
-        .bg-ambient .orb:nth-child(2) {
-            width: 350px; height: 350px;
-            background: #ec4899;
-            bottom: -80px; right: -80px;
-            animation-delay: -7s;
-            animation-duration: 25s;
-        }
-        .bg-ambient .orb:nth-child(3) {
-            width: 300px; height: 300px;
-            background: #06b6d4;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -14s;
-            animation-duration: 30s;
-        }
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -40px) scale(1.1); }
-            50% { transform: translate(-20px, 20px) scale(0.9); }
-            75% { transform: translate(40px, 30px) scale(1.05); }
-        }
-
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-
-        /* ===== LAYOUT ===== */
+        /* App Container */
         .app-container {
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 16px;
-            padding-bottom: calc(200px + var(--safe-bottom));
+            padding: 16px;
         }
 
-        /* ===== HEADER ===== */
-        .app-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 16px 0 12px;
-            backdrop-filter: blur(20px) saturate(1.5);
-            -webkit-backdrop-filter: blur(20px) saturate(1.5);
-            background: rgba(10, 10, 15, 0.8);
-            margin: 0 -16px;
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-        .header-top {
+        /* Header */
+        .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            margin-bottom: 20px;
         }
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
+
         .logo-icon {
-            width: 40px; height: 40px;
+            width: 42px;
+            height: 42px;
             background: var(--accent-gradient);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 15px var(--accent-glow);
+            font-size: 22px;
+            box-shadow: var(--shadow-glow);
         }
-        .logo-text h1 {
-            font-size: 18px;
+
+        .logo h1 {
+            font-size: 1.3rem;
             font-weight: 800;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-        .logo-text span {
-            font-size: 11px;
-            color: var(--text-secondary);
-            font-weight: 400;
+            letter-spacing: -0.5px;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 8px;
+        .logo span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
         }
-        .header-btn {
-            width: 40px; height: 40px;
-            border-radius: 12px;
-            background: var(--bg-glass);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
+
+        /* Section Card */
+        .section-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-title {
             display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 18px;
-        }
-        .header-btn:hover, .header-btn:active {
-            background: var(--bg-glass-hover);
-            color: var(--accent-light);
-            transform: scale(1.05);
-        }
-        .header-btn.active {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
+            justify-content: space-between;
+            font-size: 1.1rem;
+            font-weight: 700;
         }
 
-        /* ===== SEARCH BAR ===== */
-        .search-container {
-            position: relative;
+        .song-count-badge {
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            background: rgba(29, 185, 84, 0.15);
+            color: var(--accent-green);
+            border-radius: 20px;
+            font-weight: 700;
         }
+
+        /* Search & Controls */
+        .controls-row {
+            display: flex;
+            gap: 10px;
+        }
+
         .search-bar {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input {
             width: 100%;
-            padding: 12px 16px 12px 44px;
-            background: var(--bg-glass);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: inherit;
+            padding: 12px 16px 12px 42px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-        .search-bar::placeholder { color: var(--text-muted); }
-        .search-bar:focus {
-            border-color: var(--accent);
-            background: var(--bg-glass-hover);
-            box-shadow: 0 0 0 3px var(--accent-glow);
+
+        .search-input:focus {
+            border-color: var(--accent-green);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 12px var(--accent-green-glow);
         }
+
         .search-icon {
             position: absolute;
             left: 14px;
@@ -222,1223 +174,601 @@
             transform: translateY(-50%);
             color: var(--text-muted);
             font-size: 16px;
-            pointer-events: none;
         }
 
-        /* ===== STATS BAR ===== */
-        .stats-bar {
-            display: flex;
-            gap: 8px;
-            margin: 16px 0;
-            flex-wrap: wrap;
-        }
-        .stat-chip {
-            padding: 6px 14px;
-            background: var(--bg-glass);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 500;
+        .btn-ctrl {
+            padding: 0 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-        }
-        .stat-chip .dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: var(--accent);
+            transition: all 0.2s ease;
         }
 
-        /* ===== DOWNLOAD ALL BUTTON ===== */
+        .btn-ctrl:hover, .btn-ctrl.active {
+            background: rgba(29, 185, 84, 0.2);
+            color: var(--accent-green);
+            border-color: rgba(29, 185, 84, 0.4);
+        }
+
+        /* Download All Button */
         .download-all-btn {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: var(--accent-gradient);
             border: none;
-            border-radius: 14px;
-            color: white;
-            font-size: 14px;
+            border-radius: var(--radius-md);
+            color: black;
             font-weight: 700;
-            font-family: inherit;
+            font-size: 0.95rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-        .download-all-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px var(--accent-glow);
-        }
-        .download-all-btn:active { transform: translateY(0); }
-        .download-all-btn.downloading {
-            background: var(--bg-tertiary);
-            cursor: not-allowed;
+            gap: 8px;
+            box-shadow: var(--shadow-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* ===== SONG LIST ===== */
+        .download-all-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Song List */
         .song-list {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
+            max-height: 520px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
+
+        .song-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .song-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
         .song-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .song-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--accent-gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 0;
-        }
+
         .song-item:hover {
-            background: var(--bg-glass);
-            border-color: var(--border);
+            background: var(--bg-card-hover);
+            border-color: var(--border-light);
+            transform: translateX(4px);
         }
+
         .song-item.active {
-            background: var(--bg-glass-hover);
-            border-color: rgba(124, 58, 237, 0.3);
+            background: rgba(29, 185, 84, 0.14);
+            border-color: rgba(29, 185, 84, 0.35);
         }
-        .song-item.active::before {
-            opacity: 0.05;
-        }
-        .song-item.playing .song-art-play {
-            opacity: 1;
-        }
-        .song-art-wrapper {
-            width: 48px; height: 48px;
-            border-radius: 10px;
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             overflow: hidden;
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            background: var(--bg-tertiary);
         }
-        .song-art-wrapper img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
-        .song-art-play {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+
+        .song-disc {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.2s;
+            color: var(--accent-green);
+            flex-shrink: 0;
             font-size: 18px;
         }
-        .song-item:hover .song-art-play,
-        .song-item.active .song-art-play { opacity: 1; }
 
-        .song-info {
-            flex: 1;
-            min-width: 0;
-            z-index: 1;
+        .song-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
+
         .song-title {
-            font-size: 14px;
+            font-size: 0.95rem;
             font-weight: 600;
+            color: white;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: var(--text-primary);
-            line-height: 1.3;
         }
+
         .song-item.active .song-title {
-            color: var(--accent-light);
+            color: var(--accent-green);
         }
+
         .song-artist {
-            font-size: 12px;
-            color: var(--text-secondary);
+            font-size: 0.8rem;
+            color: var(--text-muted);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-top: 2px;
         }
+
         .song-actions {
             display: flex;
             align-items: center;
-            gap: 4px;
-            z-index: 1;
+            gap: 8px;
         }
-        .song-dl-btn {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            background: transparent;
+
+        .btn-icon {
+            background: none;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
+            font-size: 18px;
+            transition: color 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            transition: all 0.2s;
-        }
-        .song-dl-btn:hover, .song-dl-btn:active {
-            background: var(--bg-glass);
-            color: var(--accent-light);
-        }
-        .song-dl-btn.downloaded {
-            color: var(--success);
-        }
-        .song-index {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 500;
-            min-width: 24px;
-            text-align: center;
-            z-index: 1;
-        }
-        .song-item.active .song-index {
-            color: var(--accent-light);
         }
 
-        /* ===== EQUALIZER ANIMATION ===== */
-        .equalizer {
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-            height: 16px;
-        }
-        .equalizer .bar {
-            width: 3px;
-            background: var(--accent-light);
-            border-radius: 2px;
-            animation: eqBounce 0.8s ease-in-out infinite;
-        }
-        .equalizer .bar:nth-child(1) { height: 8px; animation-delay: 0s; }
-        .equalizer .bar:nth-child(2) { height: 14px; animation-delay: 0.2s; }
-        .equalizer .bar:nth-child(3) { height: 6px; animation-delay: 0.4s; }
-        .equalizer .bar:nth-child(4) { height: 12px; animation-delay: 0.1s; }
-        @keyframes eqBounce {
-            0%, 100% { transform: scaleY(0.3); }
-            50% { transform: scaleY(1); }
+        .btn-icon:hover {
+            color: white;
         }
 
-        /* ===== NOW PLAYING BAR (BOTTOM) ===== */
-        .now-playing-bar {
+        /* Floating Bottom Player */
+        .player-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 200;
-            background: rgba(18, 18, 26, 0.95);
-            backdrop-filter: blur(30px) saturate(1.8);
-            -webkit-backdrop-filter: blur(30px) saturate(1.8);
-            border-top: 1px solid var(--border);
-            padding-bottom: var(--safe-bottom);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .now-playing-bar.visible {
-            transform: translateY(0);
-        }
-
-        /* Progress bar at top of now-playing */
-        .np-progress-container {
-            width: 100%;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            position: relative;
-        }
-        .np-progress-container:hover {
-            height: 6px;
-        }
-        .np-progress-container:hover .np-progress-thumb {
-            opacity: 1;
-        }
-        .np-progress-fill {
-            height: 100%;
-            background: var(--accent-gradient);
-            border-radius: 0 2px 2px 0;
-            width: 0%;
-            transition: width 0.1s linear;
-            position: relative;
-        }
-        .np-progress-thumb {
-            position: absolute;
-            right: -6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 0 8px var(--accent-glow);
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .np-content {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 10px 16px 8px;
-        }
-
-        .np-top {
+            background: rgba(12, 12, 16, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid var(--border-light);
+            padding: 12px 20px calc(12px + var(--safe-bottom));
+            z-index: 1000;
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-        .np-art {
-            width: 48px; height: 48px;
-            border-radius: 10px;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: var(--bg-tertiary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .np-art img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
-        .np-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .np-title {
-            font-size: 14px;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .np-artist {
-            font-size: 12px;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-top: 1px;
-        }
-
-        .np-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
             gap: 8px;
         }
-        .np-btn {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            border-radius: 50%;
-            padding: 0;
-        }
-        .np-btn:active { transform: scale(0.9); }
-        .np-btn-sm { width: 36px; height: 36px; font-size: 18px; }
-        .np-btn-md { width: 40px; height: 40px; font-size: 22px; }
-        .np-btn-play {
-            width: 48px; height: 48px;
-            background: var(--accent-gradient);
-            border-radius: 50%;
-            font-size: 22px;
-            color: white;
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
-        .np-btn-play:hover { box-shadow: 0 6px 25px var(--accent-glow); }
 
-        .np-time-row {
+        .player-content {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 4px;
-        }
-        .np-time {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-variant-numeric: tabular-nums;
+            gap: 12px;
         }
 
-        .np-extras {
+        .player-track-info {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 24px;
-            padding-top: 4px;
-        }
-        .np-extra-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 16px;
-            cursor: pointer;
-            padding: 4px;
-            transition: color 0.2s;
-        }
-        .np-extra-btn.active { color: var(--accent-light); }
-        .np-extra-btn:hover { color: var(--text-primary); }
-
-        /* ===== LOADING ===== */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px;
-            gap: 20px;
-        }
-        .spinner {
-            width: 48px; height: 48px;
-            border: 3px solid var(--bg-tertiary);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-weight: 500;
+            gap: 12px;
+            overflow: hidden;
+            flex: 1;
         }
 
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            bottom: calc(200px + var(--safe-bottom));
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 20px;
-            color: var(--text-primary);
-            font-size: 13px;
-            font-weight: 500;
-            z-index: 300;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(20px);
-            white-space: nowrap;
-            box-shadow: var(--shadow);
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* ===== DOWNLOAD PROGRESS ===== */
-        .dl-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
+        .player-cover {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
             background: var(--accent-gradient);
-            z-index: 500;
-            transition: width 0.3s;
-            box-shadow: 0 0 10px var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 380px) {
-            .app-container { padding: 0 12px; }
-            .song-item { padding: 8px 8px; gap: 10px; }
-            .song-art-wrapper { width: 42px; height: 42px; }
-            .logo-text h1 { font-size: 16px; }
-            .np-btn-play { width: 44px; height: 44px; }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
-        /* ===== EMPTY STATE ===== */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
+        .btn-play-lg {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: white;
+            color: black;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-play-lg:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+        }
+
+        .progress-container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-        .empty-state p {
-            font-size: 14px;
-            line-height: 1.6;
+
+        .progress-bar {
+            flex: 1;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* ===== FADE-IN ANIMATION ===== */
-        .fade-in {
-            animation: fadeIn 0.4s ease forwards;
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .song-item.fade-in {
-            transform: translateY(8px);
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-green);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.1s linear;
         }
 
-        /* ===== CACHE INDICATOR ===== */
-        .cache-indicator {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: var(--success);
-            flex-shrink: 0;
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .spin {
+            animation: spin 3s linear infinite;
         }
-        .cache-indicator.cached { opacity: 1; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <!-- Ambient Background -->
-    <div class="bg-ambient">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
-    </div>
 
-    <!-- Download Progress -->
-    <div class="dl-progress-bar" id="dlProgressBar" style="width: 0%; display: none;"></div>
-
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
-
-    <!-- Main Container -->
     <div class="app-container">
         <!-- Header -->
-        <header class="app-header" id="appHeader">
-            <div class="header-top">
-                <div class="logo">
-                    <div class="logo-icon">ğŸµ</div>
-                    <div class="logo-text">
-                        <h1>AnÄ±l'Ä±n MÃ¼ziÄŸi</h1>
-                        <span>KiÅŸisel Koleksiyon</span>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <button class="header-btn" id="refreshBtn" title="Yenile" onclick="refreshSongs()">ğŸ”„</button>
-                    <button class="header-btn" id="shuffleBtn" title="KarÄ±ÅŸtÄ±r" onclick="toggleShuffle()">ğŸ”€</button>
-                    <button class="header-btn" id="repeatBtn" title="Tekrarla" onclick="toggleRepeat()">ğŸ”</button>
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🎵</div>
+                <div>
+                    <h1>Anıl'ın Müzikleri</h1>
+                    <span>SptfyJam Player</span>
                 </div>
             </div>
-            <div class="search-container">
-                <span class="search-icon">ğŸ”</span>
-                <input type="search" class="search-bar" id="searchBar" placeholder="ÅarkÄ± ara..." autocomplete="off">
-            </div>
+            <button class="btn-ctrl" id="downloadAllTopBtn" onclick="downloadAllSongs()">
+                ⬇️ İndir
+            </button>
         </header>
 
-        <!-- Stats -->
-        <div class="stats-bar" id="statsBar">
-            <div class="stat-chip"><span class="dot"></span><span id="songCount">YÃ¼kleniyor...</span></div>
-            <div class="stat-chip"><span class="dot" style="background: var(--success)"></span><span id="cacheStatus">Ã–nbellek: --</span></div>
-        </div>
+        <!-- Main Music Section -->
+        <main className="section-card">
+            <div className="section-card">
+                <div className="section-title">
+                    <span>Müzik Koleksiyonu</span>
+                    <span className="song-count-badge" id="songCountBadge">Yükleniyor...</span>
+                </div>
 
-        <!-- Download All -->
-        <button class="download-all-btn" id="downloadAllBtn" onclick="downloadAllSongs()">
-            <span>â¬‡ï¸</span>
-            <span>TÃ¼m ÅarkÄ±larÄ± Ä°ndir</span>
-        </button>
+                <div className="controls-row">
+                    <div className="search-bar">
+                        <span className="search-icon">🔍</span>
+                        <input 
+                            type="text" 
+                            className="search-input" 
+                            id="searchInput" 
+                            placeholder="Şarkı veya sanatçı ara..."
+                            oninput="filterSongs()"
+                        >
+                    </div>
+                    <button className="btn-ctrl" id="shuffleToggleBtn" onclick="toggleShuffle()">
+                        🔀 Shuffle
+                    </button>
+                </div>
 
-        <!-- Song List -->
-        <div id="songListContainer">
-            <div class="loading-container">
-                <div class="spinner"></div>
-                <div class="loading-text">ÅarkÄ±lar yÃ¼kleniyor...</div>
+                <button className="download-all-btn" id="downloadAllBtn" onclick="downloadAllSongs()">
+                    ⬇️ Tüm Şarkıları Cihaza İndir
+                </button>
+
+                <div className="song-list" id="songList">
+                    <p style="color: var(--text-muted); text-align: center; padding: 30px;">Şarkılar yükleniyor...</p>
+                </div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <!-- Now Playing Bar -->
-    <div class="now-playing-bar" id="nowPlayingBar">
-        <div class="np-progress-container" id="progressContainer">
-            <div class="np-progress-fill" id="progressFill">
-                <div class="np-progress-thumb"></div>
+    <!-- Hidden HTML5 Audio -->
+    <audio id="audioPlayer"></audio>
+
+    <!-- Floating Bottom Player Bar -->
+    <div class="player-bar" id="playerBar" style="display: none;">
+        <div class="player-content">
+            <div class="player-track-info">
+                <div class="player-cover">🎵</div>
+                <div class="song-details">
+                    <span class="song-title" id="playerTitle">Şarkı Seçilmedi</span>
+                    <span class="song-artist" id="playerArtist">Anıl'ın Müzikleri</span>
+                </div>
+            </div>
+
+            <div class="player-controls">
+                <button class="btn-icon" onclick="playPrevTrack()">⏮️</button>
+                <button class="btn-play-lg" id="playPauseBtn" onclick="togglePlayPause()">▶️</button>
+                <button class="btn-icon" onclick="playNextTrack()">⏭️</button>
             </div>
         </div>
-        <div class="np-content">
-            <div class="np-top">
-                <div class="np-art" id="npArt">
-                    <img src="" alt="" id="npArtImg">
-                </div>
-                <div class="np-info">
-                    <div class="np-title" id="npTitle">---</div>
-                    <div class="np-artist" id="npArtist">---</div>
-                </div>
-                <div class="np-controls">
-                    <button class="np-btn np-btn-sm" onclick="prevSong()" title="Ã–nceki">â®ï¸</button>
-                    <button class="np-btn np-btn-play" id="playPauseBtn" onclick="togglePlay()" title="Oynat/Duraklat">â–¶ï¸</button>
-                    <button class="np-btn np-btn-sm" onclick="nextSong()" title="Sonraki">â­ï¸</button>
-                </div>
+
+        <div class="progress-container">
+            <span id="currentTimeTxt">0:00</span>
+            <div class="progress-bar" id="progressBar" onclick="seekAudio(event)">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="np-time-row">
-                <span class="np-time" id="currentTime">0:00</span>
-                <div class="np-extras">
-                    <button class="np-extra-btn" id="npShuffleBtn" onclick="toggleShuffle()" title="KarÄ±ÅŸtÄ±r">ğŸ”€</button>
-                    <button class="np-extra-btn" id="npRepeatBtn" onclick="toggleRepeat()" title="Tekrarla">ğŸ”</button>
-                </div>
-                <span class="np-time" id="duration">0:00</span>
-            </div>
+            <span id="durationTxt">0:00</span>
         </div>
     </div>
-
-    <!-- Audio Element -->
-    <audio id="audioPlayer" preload="auto"></audio>
 
     <script>
-        // ===== CONFIGURATION =====
-        const REPO_OWNER = 'AniLLL3734';
-        const REPO_NAME = 'AnilVeSarkilari';
-        const BRANCH = 'main';
-        const BASE_RAW_URL = './';
-        const API_URL = null;
-        const CACHE_NAME = 'anil-muzik-cache-v2';
-        const FILE_LIST_CACHE_KEY = 'anil-file-list';
-        const FILE_LIST_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
-
-        // ===== STATE =====
-        let songs = [];
-        let filteredSongs = [];
-        let currentIndex = -1;
-        let isPlaying = false;
-        let isShuffle = false;
-        let repeatMode = 0; // 0: off, 1: all, 2: one
-        let shuffleQueue = [];
-        let shuffleIndex = -1;
-        let imageFiles = {};
-        let defaultArtUrl = '';
-        let downloadingAll = false;
-
-        // ===== DOM ELEMENTS =====
-        const audio = document.getElementById('audioPlayer');
-        const songListContainer = document.getElementById('songListContainer');
-        const searchBar = document.getElementById('searchBar');
-        const playPauseBtn = document.getElementById('playPauseBtn');
-        const progressFill = document.getElementById('progressFill');
-        const progressContainer = document.getElementById('progressContainer');
-        const npTitle = document.getElementById('npTitle');
-        const npArtist = document.getElementById('npArtist');
-        const npArtImg = document.getElementById('npArtImg');
-        const currentTimeEl = document.getElementById('currentTime');
-        const durationEl = document.getElementById('duration');
-        const nowPlayingBar = document.getElementById('nowPlayingBar');
-        const shuffleBtn = document.getElementById('shuffleBtn');
-        const repeatBtn = document.getElementById('repeatBtn');
-        const npShuffleBtn = document.getElementById('npShuffleBtn');
-        const npRepeatBtn = document.getElementById('npRepeatBtn');
-        const toastEl = document.getElementById('toast');
-        const dlProgressBar = document.getElementById('dlProgressBar');
-
-        // ===== INITIALIZATION =====
-        init();
-
-        async function init() {
-            await loadFileList();
-            renderSongList(songs);
-            setupEventListeners();
-            updateCacheStatus();
-        }
-
-        // ===== FILE LIST LOADING (with localStorage cache) =====
+        // ===== INITIAL DECLARATION BEFORE ANY FUNCTION EXECUTION =====
         const LOCAL_FILES = [{"name":"01 Xir - Intro Oyun Saati Bitti).mp3"},{"name":"01. Cevap & Şanışer - Hep Bir Sır Ölüm.mp3"},{"name":"01. Cevap - Günah Defteri.mp3"},{"name":"01. Cevap - İçimde Yine O His.mp3"},{"name":"01. Fieber - Günlük Part 2 (Umarım Rahatsındır).mp3"},{"name":"02 Xir -  Astral Seyahat.mp3"},{"name":"02. Cevap & Kodes - Hayalet.mp3"},{"name":"02. Cevap & Kodes Kahra - Psikotravma.mp3"},{"name":"02. Cevap - Her Gün Rap.mp3"},{"name":"03 - Çağrı Sinci ft Evren Avcı - Yanlışın Var (Modern Zamanlar Albüm).mp3"},{"name":"03 Xir feat. Yunus Emre  - AS Turizm AŞ.mp3"},{"name":"03. Cevap & Pit10 & Vurgu - Toz Bulutu.mp3"},{"name":"03. Cevap & Snr - Uzun Metraj.mp3"},{"name":"03. Cevap - Sonbahar Yağmurları.mp3"},{"name":"04 Xir - Joker.mp3"},{"name":"04- Yekta - ^arapç1 ^air (Nakarat..Harun Karakaplan).mp3"},{"name":"04. Flowart - Kal.mp3"},{"name":"05 Xir feat. Rapozof - Ahlak Masası.mp3"},{"name":"05. Cevap - Birkaç Şey.mp3"},{"name":"05. Kaybolan Bir Hatıra.mp3"},{"name":"06 Xir - Gece Vakti.mp3"},{"name":"06. Cevap - Döner Çark Biter Bu Rüya.mp3"},{"name":"07. Fieber - Geç Olana Kadar.mp3"},{"name":"11 Xir - Hayalperest Hayaller.mp3"},{"name":"14. Miming - Güçsüz Kelamlar [ ft. BlackFox & Kaos Mode & Zelil Kul ] [ Tribal Bunalım 2011 ].mp3"},{"name":"2001 (feat. Ceza & Sahtiyan) - Silahsız Kuvvet.mp3"},{"name":"20170517 - CEZA - Holocaust (Official Audio) [MP3].mp3"},{"name":"20170517 - CEZA - Holocaust (Official Audio) [MP3].webp"},{"name":"56 Denklemli Intro.mp3"},{"name":"Acı Biber - Ceza.mp3"},{"name":"Ahiyan & Kaptan - Al Canımı (Produced by Ahiyan).mp3"},{"name":"Ahiyan - Cereyan (Official Video) #cereyan.mp3"},{"name":"Ahmak Islatan - Sagopa Kajmer.mp3"},{"name":"Alaturka Çeşmesi - Ceza.mp3"},{"name":"AlbumArtSmall.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-0062-FD207B862D00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-0062-FD207B862D00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-007A-AE004D8FFF00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-007A-AE004D8FFF00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-01DE-18188D5BEA00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-01DE-18188D5BEA00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-0741-4E2F11EDBD00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-0741-4E2F11EDBD00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-123C-0919DABFED00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-123C-0919DABFED00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-170D-8F6C901F7600}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-170D-8F6C901F7600}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-1B34-9328B60B5B00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-1B34-9328B60B5B00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-2365-422B7735B900}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-2365-422B7735B900}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-24F6-873AD2C96600}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-24F6-873AD2C96600}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-2D96-19682D96CD00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-2D96-19682D96CD00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-2DBD-C827032CF100}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-2DBD-C827032CF100}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-34C1-5E15E5B61300}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-34C1-5E15E5B61300}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-3919-6D2C68BDBB00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-3919-6D2C68BDBB00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-3D73-AB2590FB7900}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-3D73-AB2590FB7900}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-3E77-192FAE4D6C00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-3E77-192FAE4D6C00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-413C-FA22DC3F0500}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-413C-FA22DC3F0500}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-44EB-802D97DA6E00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-44EB-802D97DA6E00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-4CFA-9114E44A3200}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-4CFA-9114E44A3200}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-50A8-771E1E0A3000}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-50A8-771E1E0A3000}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-5EAD-ED647AB5F500}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-5EAD-ED647AB5F500}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-794F-412CC78C8500}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-794F-412CC78C8500}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-800A-711D37795D00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-800A-711D37795D00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-8C13-E33F20CD7D00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-8C13-E33F20CD7D00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-8D35-1B24A27E1400}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-8D35-1B24A27E1400}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-AE2E-420FB491BF00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-AE2E-420FB491BF00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-AE83-2D656C9A3D00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-AE83-2D656C9A3D00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-B41D-4D16ED58C600}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-B41D-4D16ED58C600}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-BC55-8E2ECDAD1C00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-BC55-8E2ECDAD1C00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-BD9B-BF0F1F33D300}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-BD9B-BF0F1F33D300}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-C747-5F311AD1CC00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-C747-5F311AD1CC00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-CC02-4117E90C1900}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-CC02-4117E90C1900}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-E7C0-492C7DDB2600}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-E7C0-492C7DDB2600}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-ED01-1F2DF4D36C00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-ED01-1F2DF4D36C00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-ED6F-852264E86E00}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-ED6F-852264E86E00}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-EE1E-D6243AA12500}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-EE1E-D6243AA12500}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-EF0A-A02FB5779000}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-EF0A-A02FB5779000}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-F4B9-CC3275C3C300}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-F4B9-CC3275C3C300}_Small.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-F563-FB29921CB100}_Large.jpg"},{"name":"AlbumArt_{B5020207-474E-4720-F563-FB29921CB100}_Small.jpg"},{"name":"ALEX & RUS ДИКАЯ ЛЬВИЦА Music version HD mp3 [vHOvT8v6tAQ].mp3"},{"name":"Alles Tamam - Ceza.mp3"},{"name":"Anahtar - Nefret.mp3"},{"name":"Andra akten - Fjärde Världen.mp3"},{"name":"Ankara - Taladro.mp3"},{"name":"Anteke Crew-Kahrolası Kilometreler.mp3"},{"name":"Ardından Bakarım - Sagopa Kajmer.mp3"},{"name":"arkın allen vs. ceza.mp3"},{"name":"Arya Sezer Kundakçı - Dudak Payı Melankolik Beat.mp3"},{"name":"Asil - Bu Şehir feat Xir Gökdeniz.mp3"},{"name":"Ateşten Gömlek - Sagopa Kajmer.mp3"},{"name":"Azap HG   Mutluluğun Tonu ft Taladro  Rashness 2015.mp3"},{"name":"Azap Hg & Taladro - Yakamoz ( Yeni 2013 ).mp3"},{"name":"Azap HG - Mutluluğun Tonu (ft. Taladro & Rashness) Produced By Rashness.mp3"},{"name":"azap hg taladro ben zaten oluyum [MP3].mp3"},{"name":"azap hg taladro ben zaten oluyum [MP3].webp"},{"name":"Açık Ara Bul Kon - Ceza.mp3"},{"name":"Açık Arttırma - Ceza.mp3"},{"name":"Bir çok Kez Öldüm - Sagopa Kajmer.mp3"},{"name":"Bu Bizim Yolumuz (feat. Murselin Yiyin) [MP3].mp3"},{"name":"Burak Susturucu Ücretsiz mp3ler indirin çevrimiçi müzik dinleyin.mp3"},{"name":"Buz Dağları - Ceza.mp3"},{"name":"Canfeza   Kendimden Öte Bir Yer Olsa.mp3"},{"name":"Canfeza - Ama Sen Herkes Değilsin.mp3"},{"name":"Canfeza - Eylül 1.mp3"},{"name":"Canfeza - Karanlık ft. Ercan Doğan (OCB).mp3"},{"name":"Canfeza - Mesafe Kısaldıkça.mp3"},{"name":"Canfeza - Paha.mp3"},{"name":"Canfeza - Sarmaşık (Sözleriyle).mp3"},{"name":"Canfeza - Sel Gibi.mp3"},{"name":"Canfeza - Çöl.mp3"},{"name":"Canfeza - İpucu.mp3"},{"name":"Canfeza - Şubat.mp3"},{"name":"Caprice Atak Yeraltı Kuvvetleri feat Xir Gökdeniz.mp3"},{"name":"Cevap & Fieber - Rap Cehennemi (Remix) ft. Patron & Şehinşah ｜ Hedefin Kalbi LP.mp3"},{"name":"Cevap & Fieber - Rap'i Yudumla ｜ Hedefin Kalbi LP.mp3"},{"name":"Cevap & Fieber Tek Kaldik.mp3"},{"name":"Cevap - Beni Tan1.mp3"},{"name":"Cevap - Mazi Canlanır Mı (Remix) Feat Kodes & Sorgu & Fieber.mp3"},{"name":"Cevap - Müzik Zevki feat Burak Silencer.mp3"},{"name":"Cevap feat. Kodes & Sorgu & Fieber - Mazi Canlanır Mı ？.mp3"},{"name":"CEVAP FT FİEBER (kim sevdi seni benim kadar).mp3"},{"name":"Cevap ft. Dramelodi - Eylül.mp3"},{"name":"Cevap ft. Fieber & Kodes - Yırtık Düşler.mp3"},{"name":"Cevap ft. Fieber - Sonbahar.mp3"},{"name":"Cevap ft. Fieber - Yalnızlığımla.mp3"},{"name":"cevap_cevap-burak-silencer-yok-yolu.mp3"},{"name":"Ceza & AL-J (yeni parçası) [XmoKNz3bSJQ].mp3"},{"name":"Ceza & Friends - Doguyor Günes 2009 [HD] [xsSJv5bT2jM].mp3"},{"name":"Ceza & Killa Hakan - Delight (Official Music Video) [MP3].mp3"},{"name":"CEZA - AK47 WESTSIDE STYLE [MP3].mp3"},{"name":"CEZA - Anladın mı Derdimi Bu....! (Official Audio) [MP3].mp3"},{"name":"CEZA - Anladın mı Derdimi Bu....! (Official Audio) [MP3].webp"},{"name":"CEZA - Ceza Sahası (Official Audio) [MP3].mp3"},{"name":"CEZA - Ceza Sahası (Official Audio) [MP3].webp"},{"name":"Ceza - Hayatı Çalan Zaman (Dokuz Ay Son Gün) [@suikastnoktade] [MP3].mp3"},{"name":"Ceza - Milyon Farklı Hikaye - Official Audio [MP3].mp3"},{"name":"Ceza - Milyon Farklı Hikaye - Official Audio [MP3].webp"},{"name":"Ceza - Mürekkep Doldurdum Diss Rap [MP3].jpg"},{"name":"Ceza - Mürekkep Doldurdum Diss Rap [MP3].mp3"},{"name":"Ceza - Seyyah [MP3].mp3"},{"name":"Ceza feat Eminem, Akon - Evinden Uzakta Mashup Mix by Roka [MP3].mp3"},{"name":"Ceza Freestyle kapisma Live.mp3"},{"name":"Ceza ft Killa Hakan & Jonesmann - Wer Sind Wir [MP3-131.263k] [ANIL].mp3"},{"name":"Ceza ft Killa Hakan & Jonesmann - Wer Sind Wir [MP3-131.263k] [ANIL].webp"},{"name":"Ceza ft Killa Hakan & Xavier Naidoo - Selam [MP3-133.285k] [ANIL].mp3"},{"name":"Ceza ft Killa Hakan & Xavier Naidoo - Selam [MP3-133.285k] [ANIL].webp"},{"name":"Ceza ft. Sagopa Kajmer - Karartma Geceleri [MP3].jpg"},{"name":"Ceza ft. Sagopa Kajmer - Karartma Geceleri [MP3].mp3"},{"name":"Ceza ft. Sagopa Kajmer - Rap Adına [MP3].jpg"},{"name":"Ceza ft. Sagopa Kajmer - Rap Adına [MP3].mp3"},{"name":"Ceza Ft. Sansar Salvo - Sor Bize - Official Audio [MP3].mp3"},{"name":"Ceza Killa Hakan Decino Manuellsen - Click Clack [MP3].mp3"},{"name":"Ceza Sahtiyan Ayben diss to sagopa ｜ www.Pit10.Net [MP3].jpg"},{"name":"Ceza Sahtiyan Ayben diss to sagopa ｜ www.Pit10.Net [MP3].mp3"},{"name":"Ceza-Down Eyleme Yeni Klip [HD] [MP3].mp3"},{"name":"Cümle Mühendisi - Sagopa Kajmer.mp3"},{"name":"Da Poet - Kördüğüm (feat. Ceza) ｜ Poetika (Official Audio) [MP3-138.161k] [ANIL].mp3"},{"name":"Da Poet - Kördüğüm (feat. Ceza) ｜ Poetika (Official Audio) [MP3-138.161k] [ANIL].webp"},{"name":"Dem - Taladro.mp3"},{"name":"Deniz Kızı - Taladro.mp3"},{"name":"Deniz Kızı 2 - Taladro.mp3"},{"name":"Dertler Biter Mi - Ceza.mp3"},{"name":"DetStyle - WTF 1 (Diss Track).mp3"},{"name":"Değişebilir Her An Adres - Groovypedia Live - Sagopa Kajmer.mp3"},{"name":"Deşarj 3 [MP3].mp3"},{"name":"Deşarj 3 [MP3].webp"},{"name":"Deşarj [MP3].mp3"},{"name":"Deşarj [MP3].webp"},{"name":"Die Faust [MP3-120.184k] [ANIL].mp3"},{"name":"Die Faust [MP3-120.184k] [ANIL].webp"},{"name":"Dinleyiverin Gari [MP3-131.131k] [ANIL].mp3"},{"name":"Dinleyiverin Gari [MP3-131.131k] [ANIL].webp"},{"name":"Dr.Fuchs Toplama Kampı Feat. Sagopa Kajmer Ceza [MP3].mp3"},{"name":"Dr.Fuchs Toplama Kampı Feat. Sagopa Kajmer Ceza [MP3].webp"},{"name":"Dur diyen yok [MP3].mp3"},{"name":"Dünden Ne Kaldı (Ceza) Official Video [MP3].mp3"},{"name":"Eko Fresh, Ceza, Yener, Killa Hakan, Ayaz Kapli - Ghetto [MP3-134.834k] [ANIL].jpg"},{"name":"Eko Fresh, Ceza, Yener, Killa Hakan, Ayaz Kapli - Ghetto [MP3-134.834k] [ANIL].mp3"},{"name":"Emin Kadir - Geceler 3 (Feat. Rashness) [MP3].mp3"},{"name":"Ezberi Bozduk - (Kaan Oktay & Capital & Robin & Crt & Mackberk & Moody & Mahfer GK).mp3"},{"name":"Fark Var - Ceza.mp3"},{"name":"Feyz Al - Ceza.mp3"},{"name":"Fiber & hayki & garez Çok uzun bir hikaye.mp3"},{"name":"Fieber - Elimde Öleceksin.mp3"},{"name":"Fieber - Resim.mp3"},{"name":"Folder.jpg"},{"name":"Galiba - Orijinal Rap Versiyon - Sagopa Kajmer.mp3"},{"name":"Gece Gündüz Karışmaz - Ceza.mp3"},{"name":"Geceler - Taladro.mp3"},{"name":"Gelsin Hayat Bildiği Gibi - Ceza.mp3"},{"name":"Gölge Haramileri [9COiHbjguxM].mp3"},{"name":"Gözlerime Çizdim Seni [süper amatör].mp3"},{"name":"GÜNAYMADI - Ahiyan & Kaptan - sam@.mp3"},{"name":"Halen - Sagopa Kajmer.mp3"},{"name":"Hiç Yok Deme Hit Çok - Ceza.mp3"},{"name":"Hüznün Gemileri - Ekin Uzunlar.mp3"},{"name":"In the End - Linkin Park.mp3"},{"name":"Kalbim Rapim Nefretim Cezam!! - Ceza.mp3"},{"name":"Kalbim Reosta - Ceza.mp3"},{"name":"Kaptan Ft. Taladro - Niyaz ( Produced Rapozof) [MP3].mp3"},{"name":"Kar Demeti - Taladro.mp3"},{"name":"Karabiber Duası (feat. Kasırga) - Sagopa Kajmer.mp3"},{"name":"Kargo - Yıldızların Altında (Official Video) [MP3-126.844k] [ANIL].mp3"},{"name":"Kargo - Yıldızların Altında (Official Video) [MP3-126.844k] [ANIL].webp"},{"name":"Karikatür Komedya.mp3"},{"name":"Kelebek - Taladro.mp3"},{"name":"Killa Hakan feat Eko Fresh & Ayaz Kapli - Hersey Yolundadir [MP3].mp3"},{"name":"Kim Bilir - Ceza.mp3"},{"name":"Kim Olduğunu Unut - Ceza.mp3"},{"name":"Kime Anlatsam - Ceza.mp3"},{"name":"Kodes (ft Taladro) Karagün.mp3"},{"name":"Kolaysa Anlat - Kolera.mp3"},{"name":"Komedyenler İş Başında - Ceza.mp3"},{"name":"Kork Bizden - Ayben.mp3"},{"name":"Kuvvetmira - Fok (Fuat,Sahtiyan,Sagopa,Ceza) [MP3-129.901k] [ANIL].mp3"},{"name":"Kuvvetmira - Fok (Fuat,Sahtiyan,Sagopa,Ceza) [MP3-129.901k] [ANIL].webp"},{"name":"Lets Get Ready to Rumble [MP3-125.646k] [ANIL].mp3"},{"name":"Lets Get Ready to Rumble [MP3-125.646k] [ANIL].webp"},{"name":"Leylaya Veda - Taladro.mp3"},{"name":"Marifetname - Sagopa Kajmer.mp3"},{"name":"Maskeli Balo.mp3"},{"name":"Meclis-i Ala - Ceza.mp3"},{"name":"Med Cezir - Ceza.mp3"},{"name":"Mert wF Meral - Unutmak feat Burak Alkın (2013).mp3"},{"name":"Miming - Hoşça Kal (2018) [VK74EBTnrHI].mp3"},{"name":"Miming - Okyanusta Kaldı Umut (Official Video) [gEB5-TxQcOk].mp3"},{"name":"Miming - Sana Bir Şarkı Daha Yaptım (2014).mp3"},{"name":"Miming - Senden Sonrası (2013) [NxKnoCBcYS0].mp3"},{"name":"Miming ft. Taladro - Erimiyor Karlar (2014) [MP3].mp3"},{"name":"Moody & Crt Freestyle.mp3"},{"name":"Murda Turk feat. Ceza - Be On De Kıjk ( Orjinal Versiyon ) [MP3].mp3"},{"name":"Mümkün.mp3"},{"name":"Mütalam - Sagopa Kajmer.mp3"},{"name":"Nabız & Ahiyan - Gökyüzü (2014).mp3"},{"name":"Narcotic online ⧸⧸ Ceza - Sirhot - Dr Fuchs [MP3].jpg"},{"name":"Narcotic online ⧸⧸ Ceza - Sirhot - Dr Fuchs [MP3].mp3"},{"name":"Neyim Var Ki (feat. Sagopa K) - Ceza.mp3"},{"name":"Olsun - Taladro.mp3"},{"name":"Ozan Erdem Ft. Taladro - Kirlenmiş ( Beat By. Fırat Dövme ).mp3"},{"name":"Panorama Harem - Ceza.mp3"},{"name":"Paydos - Ceza.mp3"},{"name":"Pit10 feat Vurgu - Eli Bağla (2008).mp3"},{"name":"Ramos Kindar Ft. Taladro - Umrumda Olmaz.mp3"},{"name":"Rap Game - Killa Hakan.mp3"},{"name":"Rap turc： Mirza, Patron Saian and Da Poet [MP3].mp3"},{"name":"Rap Yaparken Günaha Mı Girdim？.mp3"},{"name":"Rapangels & Ceza - Buda Bir Dans [@suikastnoktade] [MP3].mp3"},{"name":"Rapozof & Xir Gökdeniz - Hep O Yalanla (Produced by Rapozof).mp3"},{"name":"Rapstar - Ceza.mp3"},{"name":"Rashness   Kül feat  Taladro 2010(SÖZLERİ).mp3"},{"name":"Rashness & Miming & Taladro - Hatırla [MP3].mp3"},{"name":"Rashness & Miming - Tadına Var.mp3"},{"name":"Rashness & Misery - Güzel Bir Yalan.mp3"},{"name":"Rashness & Ozan Erdem - Rapsavar (feat. CB).mp3"},{"name":"Rashness & Ozan Erdem - Rapsavar (feat. CB).webp"},{"name":"Rashness & Ozan Erdem - ROX (feat. Xir Gökdeniz).mp3"},{"name":"Rashness & Taladro & Cevap - Kukla.mp3"},{"name":"Rashness & Çağrı Sinci - Ellerimiz Temiz.webp"},{"name":"Rashness - Aşk Mesafe Tanımaz feat. Rhymesta (2011) [MP3].mp3"},{"name":"Rashness - Bana Dokunma (Feat. Taladro).mp3"},{"name":"Rashness - Bana Sor feat. Ozan Erdem (2009).jpg"},{"name":"Rashness - Bana Sor feat. Ozan Erdem (2009).mp3"},{"name":"Rashness - Cici Anne (düet Taladro).mp3"},{"name":"Rashness - Defalarca.mp3"},{"name":"Rashness - Korkunu Yen feat. Taladro & Xir Gökdeniz (2009) [MP3].mp3"},{"name":"Rashness - Sen Dedim Hep feat. Taladro (2013) [MP3].mp3"},{"name":"Rashness - Sen Dedim Hep feat. Taladro (2013) [MP3].webp"},{"name":"Rashness - Siyah (2013).mp3"},{"name":"Rashness - Sizin Oralar (feat. Taladro).mp3"},{"name":"Rashness - Yediden Yetmişe feat. Taladro.mp3"},{"name":"Rashness - İstila feat. Taladro (2011) [IUGEMIJVrRI].mp3"},{"name":"Rashness - Şansın Yok feat. Beta & Taladro (2009) [MP3].mp3"},{"name":"rashness_gunesten-goremediklerin-duet-sehabe.mp3"},{"name":"rashness_seher-vakti-duet-ozan-erdem.mp3"},{"name":"Risale - Taladro.mp3"},{"name":"Sabah Bastı Geceyi (Savaş Çocukları Part 2) - Ceza.mp3"},{"name":"Sagopa Kajmer & Kolera - Gidenler HD Ses Kalitesi [1VtFcnPY7pY].mp3"},{"name":"Sagopa Kajmer - Pesimist Karamsar [MP3].mp3"},{"name":"Sagopa Kajmer - Pesimist Karamsar [MP3].webp"},{"name":"Sagopa Kajmer ft Derin Darbe - Üç Sefil Şair [MP3].jpg"},{"name":"Sagopa Kajmer ft Derin Darbe - Üç Sefil Şair [MP3].mp3"},{"name":"Sagopa Kajmer ft. Ceza ~ Televole (Asya Sentez) [MP3].jpg"},{"name":"Sagopa Kajmer ft. Ceza ~ Televole (Asya Sentez) [MP3].mp3"},{"name":"Sagopa Kajmer ve Kolera - Bir Dizi Iz  (video Clip) [0XF5NzGPpAo].mp3"},{"name":"Sagopa Kajmerin En Hızlı Söylediği Rap ! [MP3].mp3"},{"name":"Sagopa Kajmerin En Hızlı Söylediği Rap ! [MP3].webp"},{"name":"Sahtiyan ft Ceza & Hemsta - 3 Atlı 7 Katlı [KVGUkY3evv0].mp3"},{"name":"Sahtiyan ft Ceza - Say Bak [laTuaqOXKaY].mp3"},{"name":"Saltanatın Hakimleri (feat. Ceza) - Silahsız Kuvvet.mp3"},{"name":"Sancak & Taladro - Suale Düet Rashness.mp3"},{"name":"Sancak - Bana Kendimi Ver feat. Taladro (Gözden Uzak) [MP3].mp3"},{"name":"Sancak - Geri Dönme feat. Xir Gökdeniz & Sansar Salvo & Pit10.mp3"},{"name":"Sancak - Gözümden Düştüğün An feat. Taladro & Canfeza [MP3].mp3"},{"name":"Sancak - Selametle (feat Cenut, Rapozof, Xir Gökdeniz, Vurgu).mp3"},{"name":"Sancak - Senin Yüzünden Feat. Taladro.mp3"},{"name":"Sansar Salvo ft Xir & Rapozof & Mafsal - Hadi ama.mp3"},{"name":"Saygı Mı - Taladro.mp3"},{"name":"Schwep ft Xir Gökdeniz - Alabora.mp3"},{"name":"Schwep ft Xir Gökdeniz ft Sansar Salvo & Mafsal - Nasıl Yapalım.mp3"},{"name":"Sen de Biraz Delisin - Organize Oluyoruz Vol. 1 - Ceza.mp3"},{"name":"Sen Gibi - Taladro.mp3"},{"name":"Silencer - Güzellik Yap.jpg"},{"name":"Silencer - Güzellik Yap.mp3"},{"name":"Sirhot Feat Ceza - Yıldızlar Yerde [MP3].jpg"},{"name":"Sirhot Feat Ceza - Yıldızlar Yerde [MP3].mp3"},{"name":"Sirhot Feat Ceza - Yıldızlar Yerde [opus-127.167k].jpg"},{"name":"Son Söz - Ceza.mp3"},{"name":"Sorun Var (No Joke Melankolik Mix) - Sagopa Kajmer.mp3"},{"name":"Suspus - Ceza.mp3"},{"name":"Söyle Sunam - Nurettin Rençber.mp3"},{"name":"Sır.mp3"},{"name":"Taladro   Anlamıyorlar [MP3].mp3"},{"name":"Taladro   Eskiden.mp3"},{"name":"Taladro   Çocukluğumdan Gizlediğim Şey.mp3"},{"name":"Taladro  5 sevilen şarkısı [MP3].mp3"},{"name":"Taladro  5 sevilen şarkısı [MP3].webp"},{"name":"Taladro  Yeni 2012 [MP3].mp3"},{"name":"Taladro & Aydilge - Düşmedim Daha ( Video Klip ) [MP3].mp3"},{"name":"Taladro & Eylem Atmaca - Yürüyorum Dikenlerin Üstünde (Official Video).mp3"},{"name":"Taladro & Layla Puliçe - Bir Çiçek Bırak [MP3].mp3"},{"name":"Taladro -  Her Hakkı Saklı.mp3"},{"name":"Taladro - 17 AY [SlwG1T_q7mg].mp3"},{"name":"Taladro - 46. Sokak (Video Klip) [MP3].mp3"},{"name":"Taladro - Alkışlayacaksınız [MP3].mp3"},{"name":"Taladro - Anlamıyorlar II [MP3].mp3"},{"name":"Taladro - Anlamıyorlar II [MP3].webp"},{"name":"Taladro - Ay Balam (Lyric Video) [MP3].mp3"},{"name":"Taladro - Ayakta Dur! ( Ft.Rashness ) [MP3].mp3"},{"name":"Taladro - Ayakta Dur! ( Ft.Rashness ) [MP3].webp"},{"name":"Taladro - Ayrılık Rüzgarı [MP3].mp3"},{"name":"Taladro - Ayrılık Rüzgarı [MP3].webp"},{"name":"Taladro - Aşk Uyuyor (Lyric Video) [MP3].mp3"},{"name":"Taladro - battle başladı (ft Allame, Miming ).mp3"},{"name":"Taladro - Bazen Gitmek İstersin (2013).mp3"},{"name":"Taladro - Ben Hâlâ Dimdiğim [MP3].mp3"},{"name":"Taladro - Beşinci Mevsim [MP3-NAk] [ANIL].mp3"},{"name":"Taladro - Beşinci Mevsim [MP3-NAk] [ANIL].webp"},{"name":"Taladro - Bilirsin [MP3].mp3"},{"name":"Taladro - Bir Parçam Kopuyor İçimden (feat. Rashness) [MP3].mp3"},{"name":"Taladro - Bir Parçam Kopuyor İçimden (feat. Rashness) [MP3].webp"},{"name":"Taladro - Bu Benim Yalnızlığım (düet D.E.F.O).mp3"},{"name":"Taladro - Buğu (2014) [MP3].mp3"},{"name":"Taladro - Bırak (düet Sancak) [Kandil] [MP3].mp3"},{"name":"Taladro - Bırak (düet Sancak) [Kandil] [MP3].webp"},{"name":"Taladro - Caddeler Boyu Hüzün [MP3].mp3"},{"name":"Taladro - Caddeler Boyu Hüzün [MP3].webp"},{"name":"Taladro - Carpe Diem [MP3].mp3"},{"name":"Taladro - Cellat ( 2012 Yeni ).mp3"},{"name":"Taladro - Cinnet ( Yeni 2013 ) [MP3].mp3"},{"name":"Taladro - Cinnet ( Yeni 2013 ) [MP3].webp"},{"name":"Taladro - Dam Üstüne Çul Serer ( ft. Mesut Yegane ) [MP3].mp3"},{"name":"Taladro - Dam Üstüne Çul Serer ( ft. Mesut Yegane ) [MP3].webp"},{"name":"Taladro - Desarj 4 [MP3].mp3"},{"name":"Taladro - Desarj 4 [MP3].webp"},{"name":"Taladro - Deşarj 2 feat. Rashness [MP3].mp3"},{"name":"Taladro - Deşarj 2 feat. Rashness [MP3].webp"},{"name":"Taladro - Deşarj 5 (Final) [MP3].mp3"},{"name":"Taladro - Deşarj 5 (Final) [MP3].webp"},{"name":"Taladro - Dua [MP3].mp3"},{"name":"Taladro - Düşmanımı Dostumdan Öğren.mp3"},{"name":"Taladro - Düşünme Boşver [MP3].mp3"},{"name":"Taladro - Düşünme Boşver [MP3].webp"},{"name":"Taladro - Eyvah [MP3].mp3"},{"name":"Taladro - Geriye Dönemem ( Düet Rashness ) [MP3].mp3"},{"name":"Taladro - Geçmişimin Yamaları [MP3].mp3"},{"name":"Taladro - Git Ona Artık [MP3].mp3"},{"name":"Taladro - Gözyaşı feat. Rashness (2011) [MP3].mp3"},{"name":"Taladro - Gözyaşı feat. Rashness (2011) [MP3].webp"},{"name":"Taladro - Gözümden Hasreti Gör (feat. Rashness) [MP3].mp3"},{"name":"Taladro - Hançer feat. Rashness (Official Video) [MP3].mp3"},{"name":"Taladro - Hançer feat. Rashness (Official Video) [MP3].webp"},{"name":"Taladro - Hastane.mp3"},{"name":"Taladro - Hesap (YENİ).mp3"},{"name":"Taladro - Hicret (Prod By. Ali Alkumru) [MP3].mp3"},{"name":"Taladro - Hüzün Haftası (düet Rashness) (2016) [MP3].mp3"},{"name":"Taladro - Hüzün Haftası (düet Rashness) (2016) [MP3].webp"},{"name":"Taladro - Hüzünlü Sarmaşık [MP3].mp3"},{"name":"Taladro - Hüzünlü Sarmaşık [MP3].webp"},{"name":"Taladro - Kahverengi Sokaklar (feat. Atakan Stress) [9zTDN4nq118].mp3"},{"name":"Taladro - Karanlıkta Yaşayan Adam [MP3].mp3"},{"name":"Taladro - Kusturduğun Kanla Adını Yazdım [MP3].mp3"},{"name":"Taladro - Kusturduğun Kanla Adını Yazdım [MP3].webp"},{"name":"Taladro - Körün Gönyesi  ( düet Şanışer ) [MP3].mp3"},{"name":"Taladro - Küf ( düet Canfeza ) [MP3].mp3"},{"name":"Taladro - Liman (2012).mp3"},{"name":"Taladro - Masal Perim (Sözleri) [MP3].mp3"},{"name":"Taladro - MatCap (Diss Jagged) [MP3].mp3"},{"name":"Taladro - Mazi [MP3].mp3"},{"name":"Taladro - Mesafe [MP3].mp3"},{"name":"Taladro - Minik Kuşum [MP3].mp3"},{"name":"Taladro - Mutluluğun Taklidi ( Video Klip 2013 ).mp3"},{"name":"Taladro - Nakış (düet Emar) [MP3].mp3"},{"name":"Taladro - Nakış (düet Emar) [MP3].webp"},{"name":"Taladro - Ne Senle Ne de Sensiz (düet Rashness) [Kandil] [MP3].mp3"},{"name":"Taladro - Ne Senle Ne de Sensiz (düet Rashness) [Kandil] [MP3].webp"},{"name":"Taladro - Payiz (düet Canfeza) [MP3].mp3"},{"name":"Taladro - Payiz (düet Canfeza) [MP3].webp"},{"name":"Taladro - Pelerin [MP3].mp3"},{"name":"Taladro - Pelerin [MP3].webp"},{"name":"Taladro - Rüzgar Hiç Ağlar Mı？ [MP3].mp3"},{"name":"Taladro - Rüzgar Hiç Ağlar Mı？ [MP3].webp"},{"name":"Taladro - Saygın Olsun [MP3].mp3"},{"name":"Taladro - Semaver [MP3].mp3"},{"name":"Taladro - Senden Arda Kalan Küsuratlar [MP3].mp3"},{"name":"Taladro - Sevgilim [MP3].mp3"},{"name":"Taladro - Sihir (Yeni) [MP3].mp3"},{"name":"Taladro - Siyah (YENİ) [MP3].mp3"},{"name":"Taladro - Son (Feat. Rashness) [MP3].mp3"},{"name":"Taladro - Son (Feat. Rashness) [MP3].webp"},{"name":"Taladro - Son Dördün [MP3].mp3"},{"name":"Taladro - Son Mektup.mp3"},{"name":"Taladro - Susuyor Gibiyim (feat. Emar).mp3"},{"name":"Taladro - Vefa (düet Rashness) #TaladroVefa [MP3].mp3"},{"name":"Taladro - Vişne [TCU0yZGjxes].mp3"},{"name":"Taladro - Yalnız Bırak Beni feat. Rashness (2013) [MP3].mp3"},{"name":"Taladro - Yalnız Bırak Beni feat. Rashness (2013) [MP3].webp"},{"name":"Taladro - Yalnızlık (2014) [MP3].jpg"},{"name":"Taladro - Yalnızlık (2014) [MP3].mp3"},{"name":"Taladro - Yangınım İnceden (Lyric Video) [MP3].mp3"},{"name":"Taladro - Yaprak Dökümü (Bidâyet) [MP3].jpg"},{"name":"Taladro - Yaprak Dökümü (Bidâyet) [MP3].mp3"},{"name":"Taladro - Yarası Olan Gocunur (2014) [MP3].mp3"},{"name":"Taladro - Yarım Satır [MP3].mp3"},{"name":"Taladro - Yazık ( düet Hidra ).mp3"},{"name":"Taladro - Yazılmışsa (Feat. Rashness) [MP3].mp3"},{"name":"Taladro - Yazılmışsa (Feat. Rashness) [MP3].webp"},{"name":"Taladro - Örgü (Official Video) [MP3].mp3"},{"name":"Taladro - Özlemek (Yeni 2013) [MP3].mp3"},{"name":"Taladro - Özlemek (Yeni 2013) [MP3].webp"},{"name":"Taladro 2013 AL Kalın Ses.mp3"},{"name":"Taladro banane.mp3"},{"name":"Taladro feat Miming - Ergen Vadisi [Diss Dilkeş kardar Joker HipopJobz].mp3"},{"name":"Taladro feat Zakkum - 40.gün.mp3"},{"name":"Taladro feat Zelil Kul - Sandık Boş [MP3].mp3"},{"name":"Taladro feat. Ece Mumay - Uçurtma (Lyric Video) [MP3].mp3"},{"name":"Taladro feat. Ece Mumay - Uçurtma (Lyric Video) [MP3].webp"},{"name":"Taladro feat. Rashness - Kadavra (Official Video) [MP3].mp3"},{"name":"Taladro feat. Rashness - Kadavra (Official Video) [MP3].webp"},{"name":"Taladro ft Sancak - Gülümse [MP3].mp3"},{"name":"Taladro ft. Misery - Posta Kutusu ( 2013 ).mp3"},{"name":"Taladro ft. Yekta&Orkun - Yalancı Sonbahar  (2015) [MP3].mp3"},{"name":"Taladro Ft.Kaptan -Ve Şimdi Vefat Etti Huzur(Sözler) [MP3].mp3"},{"name":"Taladro Ön yargı 2016 (Alayına Diss).mp3"},{"name":"Taladro-Can Yeleği (2016) [MP3].mp3"},{"name":"Taladro-Keyfin Nasıl Diss Tooo Piyasa 2016 (Bilinmez ).mp3"},{"name":"Taladro-Nihayet [MP3].mp3"},{"name":"Taladro-Ozan Erdem Kalbimdeki Ses.mp3"},{"name":"Taladro-İltifat(YENİ) [MP3].mp3"},{"name":"Tamam (feat. Fjarde Varlden) - Ceza.mp3"},{"name":"Tanrı Çekti Tüm Resimleri (feat. Dr. Fuchs).mp3"},{"name":"Tech N9ne - Worldwide Choppers (Feat. Busta Rhymes,  Yelawolf, Twisted Insane...) ｜ OFFICIAL AUDIO.mp3"},{"name":"Tek Bir İhtimal Var - Ceza.mp3"},{"name":"TSK Armoni Mızıkası： ＂Biz Atatürk Gençleriyiz＂ [MP3-131.789k] [ANIL].mp3"},{"name":"TSK Armoni Mızıkası： ＂Biz Atatürk Gençleriyiz＂ [MP3-131.789k] [ANIL].webp"},{"name":"Turan Şahin - Ya Ben Anlatamadum (Horon) [MP3-139.919k] [ANIL].mp3"},{"name":"Turan Şahin - Ya Ben Anlatamadum (Horon) [MP3-139.919k] [ANIL].webp"},{"name":"Uğurla Bahtiyarları - Sagopa Kajmer.mp3"},{"name":"Vesselam [SNFf4997odg].mp3"},{"name":"VOLTRAN - Da Poet.mp3"},{"name":"Vurgu & (Feat BLL) - Ağlayıp [HQ].mp3"},{"name":"Vurgu & (Feat Pit10) - Vur Kaç.mp3"},{"name":"Vurgu - Ovvv.mp3"},{"name":"Vurgu Feat. Sansar Salvo & Alaturka Mavzer - Dengesiz.mp3"},{"name":"Vurgu Feat. Xir Gökdeniz - Bomba.mp3"},{"name":"Xir Gökdeniz & Taladro & Rashness - Naber İbne [MP3].mp3"},{"name":"Xir Gökdeniz - 1730.mp3"},{"name":"Xir Gökdeniz - Bencil Hayatım [MP3].mp3"},{"name":"Xir Gökdeniz - Elveda feat. Rashness (2010) [MP3].mp3"},{"name":"Xir Gökdeniz - Her Şey Yolunda (2012) [MP3].mp3"},{"name":"Xir Gökdeniz - Çoktan Bitti.mp3"},{"name":"Xir Gökdeniz feat. Zeynep Sağdaş,  Vurgu,  Rapozof - Geçer Günler.mp3"},{"name":"Xir Gökdeniz ~ Kac Kez (album Extra 2012) [MP3].mp3"},{"name":"Yekta & Mert Umul - Kalbimin Solcuları (2014).mp3"},{"name":"Yekta & Taladro & Miming - 3 Yıl (2013) [MP3].mp3"},{"name":"Yekta - Değiştim.mp3"},{"name":"Yekta - Hoşgeldin Geceye.mp3"},{"name":"Yekta - Siyah Gökkuşağı (Offıcal Audio⧸2016).mp3"},{"name":"Yekta - Tenime Sin.mp3"},{"name":"Yekta-Yalnızlık Üşür Mü ？ (Official Video).mp3"},{"name":"Yener Çevik - Kadro ft Xir, Sansar Salvo, Defkhan ►Prod. Nasihat ( LYRİC VİDEO ) [cpVPvUp9Gpw].mp3"},{"name":"Yener Çevik - Kadro ft Xir, Sansar Salvo, Defkhan ►Prod. Nasihat ( LYRİC VİDEO ).mp3"},{"name":"Yeniden Sevme Beni - Taladro.mp3"},{"name":"Yerli Plaka - Ceza.mp3"},{"name":"Yüksek Gerilim - Ceza.mp3"},{"name":"Zakkum & Taladro & Mr - İpodunda Top 10.mp3"},{"name":"Zerk-i Ziyan [MP3].mp3"},{"name":"Zeynep Sağdaş feat. Vurgu - Masal Olmuş.mp3"},{"name":"İskeletler Diyarında Bir Et Parçası.mp3"}];
 
-        async function loadFileList(forceRefresh = false) {
-            processFetchedFiles(LOCAL_FILES);
-        }
+        let songsList = [];
+        let filteredSongs = [];
+        let currentIndex = null;
+        let isPlaying = false;
+        let isShuffle = true;
 
-        function processFetchedFiles(data) {
-            const mp3Files = [];
-            const images = {};
+        const audio = document.getElementById('audioPlayer');
+        const songListEl = document.getElementById('songList');
+        const searchInput = document.getElementById('searchInput');
+        const songCountBadge = document.getElementById('songCountBadge');
 
-            data.forEach(file => {
-                const name = file.name;
-                if (name.toLowerCase().endsWith('.mp3')) {
-                    mp3Files.push(name);
-                } else if (/\.(jpg|jpeg|png|webp)$/i.test(name)) {
-                    images[name.toLowerCase()] = name;
-                }
-            });
+        const playerBar = document.getElementById('playerBar');
+        const playerTitle = document.getElementById('playerTitle');
+        const playerArtist = document.getElementById('playerArtist');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeTxt = document.getElementById('currentTimeTxt');
+        const durationTxt = document.getElementById('durationTxt');
+        const shuffleToggleBtn = document.getElementById('shuffleToggleBtn');
 
-            imageFiles = images;
+        // Initialize application after DOM load
+        window.addEventListener('DOMContentLoaded', () => {
+            initPlayer();
+        });
 
-            // Find default art (AlbumArt Large)
-            const defaultArtKeys = Object.keys(images).filter(k => k.includes('large'));
-            if (defaultArtKeys.length > 0) {
-                defaultArtUrl = BASE_RAW_URL + encodeFileURI(images[defaultArtKeys[0]]);
-            }
-
-            // Parse songs
-            songs = mp3Files.map((filename, idx) => {
-                const parsed = parseSongName(filename);
-                return {
-                    id: idx,
-                    filename: filename,
-                    title: parsed.title,
-                    artist: parsed.artist,
-                    url: BASE_RAW_URL + encodeFileURI(filename),
-                    artUrl: findArtForSong(filename)
-                };
-            });
-
-            filteredSongs = [...songs];
-            document.getElementById('songCount').textContent = `${songs.length} ÅŸarkÄ±`;
-        }
-
-        function encodeFileURI(filename) {
-            return filename.split('/').map(part => encodeURIComponent(part)).join('/');
-        }
-
-        function parseSongName(filename) {
-            let name = filename.replace(/\.mp3$/i, '');
+        async function initPlayer() {
+            let files = LOCAL_FILES;
             
-            // Remove common patterns like [MP3], (Official Video), etc.
-            name = name.replace(/\s*\[.*?\]\s*/g, ' ');
-            name = name.replace(/\s*\(Official\s*(Video|Audio)\)\s*/gi, ' ');
-            
-            // Remove leading number pattern like "01. " or "20170517 - "
-            name = name.replace(/^\d{1,3}\.\s*/, '');
-            
-            // Try to split by " - "
-            let title = name.trim();
-            let artist = '';
-            
-            const dashIdx = name.indexOf(' - ');
-            if (dashIdx > 0) {
-                const parts = name.split(' - ');
-                if (parts.length >= 2) {
-                    artist = parts[0].trim();
-                    title = parts.slice(1).join(' - ').trim();
+            // Try fetching songs_db.json if LOCAL_FILES is empty
+            if (!files || files.length === 0) {
+                try {
+                    const res = await fetch('songs_db.json');
+                    const dbData = await res.json();
+                    files = dbData.map(item => ({ name: item.filename || item.name }));
+                } catch (e) {
+                    console.warn("Could not load songs_db.json:", e);
                 }
             }
-            
-            return { title, artist: artist || 'Bilinmeyen SanatÃ§Ä±' };
+
+            // Parse MP3 files
+            songsList = files
+                .filter(f => f.name && f.name.toLowerCase().endsWith('.mp3'))
+                .map((f, index) => {
+                    const nameWithoutExt = f.name.replace(/\.[^/.]+$/, "");
+                    let artist = "Anıl'ın Müzikleri";
+                    let title = nameWithoutExt;
+
+                    if (nameWithoutExt.includes(" - ")) {
+                        const parts = nameWithoutExt.split(" - ");
+                        artist = parts[0].trim();
+                        title = parts.slice(1).join(" - ").trim();
+                    } else if (nameWithoutExt.includes(" & ")) {
+                        const parts = nameWithoutExt.split(" & ");
+                        artist = parts[0].trim();
+                        title = parts.slice(1).join(" & ").trim();
+                    }
+
+                    return {
+                        id: index,
+                        fileName: f.name,
+                        title: title,
+                        artist: artist,
+                        url: encodeURIComponent(f.name)
+                    };
+                });
+
+            filteredSongs = [...songsList];
+            songCountBadge.textContent = `${songsList.length} Şarkı`;
+            renderSongs();
+            setupAudioListeners();
         }
 
-        function findArtForSong(filename) {
-            const baseName = filename.replace(/\.mp3$/i, '');
-            // Try to find a matching image
-            const possibleExts = ['.webp', '.jpg', '.jpeg', '.png'];
-            for (const ext of possibleExts) {
-                const key = (baseName + ext).toLowerCase();
-                if (imageFiles[key]) {
-                    return BASE_RAW_URL + encodeFileURI(imageFiles[key]);
-                }
-            }
-            return defaultArtUrl || '';
-        }
-
-        // ===== RENDER SONG LIST =====
-        function renderSongList(list) {
-            if (list.length === 0) {
-                songListContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">ğŸµ</div>
-                        <p>SonuÃ§ bulunamadÄ±</p>
-                    </div>
-                `;
+        function renderSongs() {
+            if (filteredSongs.length === 0) {
+                songListEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 30px;">Şarkı bulunamadı.</p>`;
                 return;
             }
 
-            const fragment = document.createDocumentFragment();
-            const songListDiv = document.createElement('div');
-            songListDiv.className = 'song-list';
+            songListEl.innerHTML = filteredSongs.map((song) => {
+                const globalIdx = songsList.findIndex(s => s.id === song.id);
+                const isCurrent = currentIndex === globalIdx;
 
-            list.forEach((song, idx) => {
-                const div = document.createElement('div');
-                div.className = `song-item fade-in${currentIndex === song.id ? ' active' : ''}${currentIndex === song.id && isPlaying ? ' playing' : ''}`;
-                div.style.animationDelay = `${Math.min(idx * 0.03, 0.6)}s`;
-                div.dataset.songId = song.id;
-                div.onclick = () => playSong(song.id);
-
-                div.innerHTML = `
-                    <span class="song-index">${currentIndex === song.id && isPlaying 
-                        ? '<div class="equalizer"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>' 
-                        : (idx + 1)}</span>
-                    <div class="song-art-wrapper">
-                        <img src="${song.artUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9IiMxYTFhMmUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzU1NTU3MCI+8J+OtTwvdGV4dD48L3N2Zz4='}" 
-                             alt="${song.title}" loading="lazy" 
-                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9IiMxYTFhMmUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzU1NTU3MCI+8J+OtTwvdGV4dD48L3N2Zz4='">
-                        <div class="song-art-play">${currentIndex === song.id && isPlaying ? 'â¸ï¸' : 'â–¶ï¸'}</div>
-                    </div>
-                    <div class="song-info">
-                        <div class="song-title">${escapeHTML(song.title)}</div>
-                        <div class="song-artist">${escapeHTML(song.artist)}</div>
-                    </div>
-                    <div class="cache-indicator" id="cache-${song.id}"></div>
-                    <div class="song-actions">
-                        <button class="song-dl-btn" onclick="event.stopPropagation(); downloadSong(${song.id})" title="Ä°ndir">â¬‡ï¸</button>
+                return `
+                    <div class="song-item ${isCurrent ? 'active' : ''}" onclick="playSong(${globalIdx})">
+                        <div class="song-info">
+                            <div class="song-disc">
+                                ${isCurrent && isPlaying ? '💿' : '🎵'}
+                            </div>
+                            <div class="song-details">
+                                <span class="song-title">${escapeHtml(song.title)}</span>
+                                <span class="song-artist">${escapeHtml(song.artist)}</span>
+                            </div>
+                        </div>
+                        <div class="song-actions">
+                            <button class="btn-icon" onclick="event.stopPropagation(); downloadSong('${escapeHtml(song.fileName)}')" title="İndir">⬇️</button>
+                            <button class="btn-icon">${isCurrent && isPlaying ? '⏸️' : '▶️'}</button>
+                        </div>
                     </div>
                 `;
-
-                songListDiv.appendChild(div);
-            });
-
-            songListContainer.innerHTML = '';
-            songListContainer.appendChild(songListDiv);
-
-            // Check cache status for each song
-            checkCacheForSongs();
+            }).join('');
         }
 
-        // ===== PLAY SONG =====
-        function playSong(songId) {
-            const song = songs.find(s => s.id === songId);
-            if (!song) return;
-
-            currentIndex = songId;
-
-            // Try to load from cache first
-            loadAudioFromCacheOrNetwork(song.url);
-            
-            npTitle.textContent = song.title;
-            npArtist.textContent = song.artist;
-            npArtImg.src = song.artUrl || '';
-            npArtImg.onerror = function() { this.style.display = 'none'; };
-            npArtImg.onload = function() { this.style.display = 'block'; };
-
-            nowPlayingBar.classList.add('visible');
-            updateMediaSession(song);
-            updateActiveSong();
-        }
-
-        async function loadAudioFromCacheOrNetwork(url) {
-            try {
-                const cache = await caches.open(CACHE_NAME);
-                const cachedResponse = await cache.match(url);
-                
-                if (cachedResponse) {
-                    const blob = await cachedResponse.blob();
-                    const blobUrl = URL.createObjectURL(blob);
-                    audio.src = blobUrl;
-                    audio.play().catch(e => console.log('Play failed:', e));
-                    isPlaying = true;
-                    updatePlayButton();
-                    return;
-                }
-            } catch (e) {
-                // Cache API not available, fall through to network
+        function filterSongs() {
+            const q = searchInput.value.toLowerCase().trim();
+            if (!q) {
+                filteredSongs = [...songsList];
+            } else {
+                filteredSongs = songsList.filter(s => 
+                    s.title.toLowerCase().includes(q) || s.artist.toLowerCase().includes(q)
+                );
             }
-
-            audio.src = url;
-            audio.play().catch(e => console.log('Play failed:', e));
-            isPlaying = true;
-            updatePlayButton();
-
-            // Cache in background
-            cacheAudioInBackground(url);
+            renderSongs();
         }
 
-        async function cacheAudioInBackground(url) {
-            try {
-                const cache = await caches.open(CACHE_NAME);
-                const exists = await cache.match(url);
-                if (!exists) {
-                    await cache.add(url);
-                    updateCacheStatus();
-                    checkCacheForSongs();
-                }
-            } catch (e) {
-                // Caching failed, that's okay
+        function playSong(index) {
+            if (index < 0 || index >= songsList.length) return;
+            currentIndex = index;
+            const song = songsList[index];
+
+            audio.src = song.url;
+            audio.play().then(() => {
+                isPlaying = true;
+                updatePlayerUI();
+            }).catch(console.error);
+
+            // MediaSession for Mobile Background Playback & Lockscreen
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: song.title,
+                    artist: song.artist,
+                    album: "Anıl'ın Müzik Çaları",
+                    artwork: [
+                        { src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎵</text></svg>', sizes: '512x512', type: 'image/svg+xml' }
+                    ]
+                });
+
+                navigator.mediaSession.setActionHandler('play', () => { audio.play(); isPlaying = true; updatePlayerUI(); });
+                navigator.mediaSession.setActionHandler('pause', () => { audio.pause(); isPlaying = false; updatePlayerUI(); });
+                navigator.mediaSession.setActionHandler('previoustrack', playPrevTrack);
+                navigator.mediaSession.setActionHandler('nexttrack', playNextTrack);
             }
         }
 
-        // ===== CONTROLS =====
-        function togglePlay() {
-            if (currentIndex === -1 && songs.length > 0) {
-                playSong(songs[0].id);
+        function togglePlayPause() {
+            if (currentIndex === null && songsList.length > 0) {
+                playSong(0);
                 return;
             }
+            if (!audio.src) return;
+
             if (isPlaying) {
                 audio.pause();
                 isPlaying = false;
             } else {
-                audio.play().catch(e => {});
+                audio.play().catch(console.error);
                 isPlaying = true;
             }
-            updatePlayButton();
-            updateActiveSong();
+            updatePlayerUI();
         }
 
-        function nextSong() {
-            if (songs.length === 0) return;
-
+        function playNextTrack() {
+            if (songsList.length === 0) return;
             if (isShuffle) {
-                playRandomSong();
-                return;
-            }
-
-            const currentListIndex = filteredSongs.findIndex(s => s.id === currentIndex);
-            let nextIdx;
-            if (currentListIndex >= 0 && currentListIndex < filteredSongs.length - 1) {
-                nextIdx = filteredSongs[currentListIndex + 1].id;
+                const randomIdx = Math.floor(Math.random() * songsList.length);
+                playSong(randomIdx);
             } else {
-                nextIdx = filteredSongs[0].id;
+                const nextIdx = (currentIndex === null || currentIndex >= songsList.length - 1) ? 0 : currentIndex + 1;
+                playSong(nextIdx);
             }
-            playSong(nextIdx);
         }
 
-        function prevSong() {
-            if (songs.length === 0) return;
-
-            // If more than 3 seconds in, restart the song
-            if (audio.currentTime > 3) {
-                audio.currentTime = 0;
-                return;
-            }
-
-            if (isShuffle) {
-                playRandomSong();
-                return;
-            }
-
-            const currentListIndex = filteredSongs.findIndex(s => s.id === currentIndex);
-            let prevIdx;
-            if (currentListIndex > 0) {
-                prevIdx = filteredSongs[currentListIndex - 1].id;
-            } else {
-                prevIdx = filteredSongs[filteredSongs.length - 1].id;
-            }
+        function playPrevTrack() {
+            if (songsList.length === 0) return;
+            const prevIdx = (currentIndex === null || currentIndex <= 0) ? songsList.length - 1 : currentIndex - 1;
             playSong(prevIdx);
-        }
-
-        function playRandomSong() {
-            if (filteredSongs.length <= 1) {
-                if (filteredSongs.length === 1) playSong(filteredSongs[0].id);
-                return;
-            }
-            let randomIdx;
-            do {
-                randomIdx = Math.floor(Math.random() * filteredSongs.length);
-            } while (filteredSongs[randomIdx].id === currentIndex);
-            playSong(filteredSongs[randomIdx].id);
         }
 
         function toggleShuffle() {
             isShuffle = !isShuffle;
-            shuffleBtn.classList.toggle('active', isShuffle);
-            npShuffleBtn.classList.toggle('active', isShuffle);
-            showToast(isShuffle ? 'ğŸ”€ KarÄ±ÅŸtÄ±rma aÃ§Ä±k' : 'ğŸ”€ KarÄ±ÅŸtÄ±rma kapalÄ±');
+            shuffleToggleBtn.style.color = isShuffle ? 'var(--accent-green)' : 'var(--text-muted)';
+            shuffleToggleBtn.style.borderColor = isShuffle ? 'rgba(29, 185, 84, 0.4)' : 'var(--border-light)';
         }
 
-        function toggleRepeat() {
-            repeatMode = (repeatMode + 1) % 3;
-            const labels = ['ğŸ” Tekrar kapalÄ±', 'ğŸ” TÃ¼mÃ¼nÃ¼ tekrarla', 'ğŸ”‚ Birini tekrarla'];
-            const icons = ['ğŸ”', 'ğŸ”', 'ğŸ”‚'];
-            repeatBtn.textContent = icons[repeatMode];
-            npRepeatBtn.textContent = icons[repeatMode];
-            repeatBtn.classList.toggle('active', repeatMode > 0);
-            npRepeatBtn.classList.toggle('active', repeatMode > 0);
-            showToast(labels[repeatMode]);
-        }
-
-        function updatePlayButton() {
-            playPauseBtn.textContent = isPlaying ? 'â¸ï¸' : 'â–¶ï¸';
-        }
-
-        function updateActiveSong() {
-            renderSongList(filteredSongs);
-        }
-
-        // ===== PROGRESS & TIME =====
-        function formatTime(seconds) {
-            if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        // ===== SEARCH =====
-        searchBar.addEventListener('input', () => {
-            const query = searchBar.value.toLowerCase().trim();
-            if (!query) {
-                filteredSongs = [...songs];
-            } else {
-                filteredSongs = songs.filter(s => 
-                    s.title.toLowerCase().includes(query) || 
-                    s.artist.toLowerCase().includes(query) ||
-                    s.filename.toLowerCase().includes(query)
-                );
+        function updatePlayerUI() {
+            if (currentIndex !== null && songsList[currentIndex]) {
+                const song = songsList[currentIndex];
+                playerTitle.textContent = song.title;
+                playerArtist.textContent = song.artist;
+                playPauseBtn.textContent = isPlaying ? '⏸️' : '▶️';
+                playerBar.style.display = 'flex';
+                renderSongs();
             }
-            renderSongList(filteredSongs);
-        });
+        }
 
-        // ===== EVENT LISTENERS =====
-        function setupEventListeners() {
+        function setupAudioListeners() {
             audio.addEventListener('timeupdate', () => {
-                if (audio.duration) {
-                    const pct = (audio.currentTime / audio.duration) * 100;
-                    progressFill.style.width = pct + '%';
-                    currentTimeEl.textContent = formatTime(audio.currentTime);
-                    durationEl.textContent = formatTime(audio.duration);
-                }
+                if (!audio.duration) return;
+                const pct = (audio.currentTime / audio.duration) * 100;
+                progressFill.style.width = `${pct}%`;
+                currentTimeTxt.textContent = formatTime(audio.currentTime);
+                durationTxt.textContent = formatTime(audio.duration);
             });
 
             audio.addEventListener('ended', () => {
-                if (repeatMode === 2) {
-                    audio.currentTime = 0;
-                    audio.play();
-                    return;
-                }
-                if (isShuffle) {
-                    playRandomSong();
-                } else {
-                    const currentListIndex = filteredSongs.findIndex(s => s.id === currentIndex);
-                    if (currentListIndex < filteredSongs.length - 1) {
-                        nextSong();
-                    } else if (repeatMode === 1) {
-                        playSong(filteredSongs[0].id);
-                    } else {
-                        isPlaying = false;
-                        updatePlayButton();
-                        updateActiveSong();
-                    }
-                }
-            });
-
-            audio.addEventListener('play', () => {
-                isPlaying = true;
-                updatePlayButton();
-                updateActiveSong();
-            });
-
-            audio.addEventListener('pause', () => {
-                isPlaying = false;
-                updatePlayButton();
-                updateActiveSong();
-            });
-
-            // Progress bar seeking
-            let isSeeking = false;
-            progressContainer.addEventListener('mousedown', startSeek);
-            progressContainer.addEventListener('touchstart', startSeek, { passive: true });
-
-            function startSeek(e) {
-                isSeeking = true;
-                seek(e);
-                document.addEventListener('mousemove', seek);
-                document.addEventListener('mouseup', endSeek);
-                document.addEventListener('touchmove', seek, { passive: true });
-                document.addEventListener('touchend', endSeek);
-            }
-
-            function seek(e) {
-                if (!isSeeking) return;
-                const rect = progressContainer.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-                if (audio.duration) {
-                    audio.currentTime = pct * audio.duration;
-                    progressFill.style.width = (pct * 100) + '%';
-                }
-            }
-
-            function endSeek() {
-                isSeeking = false;
-                document.removeEventListener('mousemove', seek);
-                document.removeEventListener('mouseup', endSeek);
-                document.removeEventListener('touchmove', seek);
-                document.removeEventListener('touchend', endSeek);
-            }
-
-            // Keyboard shortcuts
-            document.addEventListener('keydown', (e) => {
-                if (e.target.tagName === 'INPUT') return;
-                switch (e.code) {
-                    case 'Space': e.preventDefault(); togglePlay(); break;
-                    case 'ArrowRight': nextSong(); break;
-                    case 'ArrowLeft': prevSong(); break;
-                }
+                playNextTrack();
             });
         }
 
-        // ===== MEDIA SESSION API (Phone Notification Controls) =====
-        function updateMediaSession(song) {
-            if (!('mediaSession' in navigator)) return;
+        function seekAudio(e) {
+            if (!audio.duration) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const newTime = (clickX / rect.width) * audio.duration;
+            audio.currentTime = newTime;
+        }
 
-            const artwork = [];
-            if (song.artUrl) {
-                artwork.push({ src: song.artUrl, sizes: '512x512', type: 'image/jpeg' });
-            }
+        function downloadSong(fileName) {
+            const a = document.createElement('a');
+            a.href = fileName;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
 
-            navigator.mediaSession.metadata = new MediaMetadata({
-                title: song.title,
-                artist: song.artist,
-                album: "AnÄ±l'Ä±n MÃ¼ziÄŸi",
-                artwork: artwork
-            });
-
-            navigator.mediaSession.setActionHandler('play', () => {
-                audio.play();
-                isPlaying = true;
-                updatePlayButton();
-            });
-            navigator.mediaSession.setActionHandler('pause', () => {
-                audio.pause();
-                isPlaying = false;
-                updatePlayButton();
-            });
-            navigator.mediaSession.setActionHandler('previoustrack', prevSong);
-            navigator.mediaSession.setActionHandler('nexttrack', nextSong);
-            navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-                audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
-            });
-            navigator.mediaSession.setActionHandler('seekforward', (details) => {
-                audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + (details.seekOffset || 10));
-            });
-            navigator.mediaSession.setActionHandler('seekto', (details) => {
-                if (details.fastSeek && 'fastSeek' in audio) {
-                    audio.fastSeek(details.seekTime);
-                } else {
-                    audio.currentTime = details.seekTime;
-                }
+        function downloadAllSongs() {
+            if (!confirm(`Toplam ${songsList.length} şarkı indirilmek üzere sıraya alınacak. Devam etmek istiyor musunuz?`)) return;
+            songsList.forEach((song, i) => {
+                setTimeout(() => downloadSong(song.fileName), i * 300);
             });
         }
 
-        // ===== DOWNLOAD FUNCTIONS =====
-        async function downloadSong(songId) {
-            const song = songs.find(s => s.id === songId);
-            if (!song) return;
-
-            showToast(`â¬‡ï¸ Ä°ndiriliyor: ${song.title}`);
-
-            try {
-                const response = await fetch(song.url);
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = song.filename;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                showToast(`âœ… Ä°ndirildi: ${song.title}`);
-
-                // Cache it too
-                try {
-                    const cache = await caches.open(CACHE_NAME);
-                    await cache.put(song.url, new Response(blob.slice()));
-                    updateCacheStatus();
-                    checkCacheForSongs();
-                } catch (e) {}
-            } catch (error) {
-                showToast(`âŒ Ä°ndirme baÅŸarÄ±sÄ±z: ${song.title}`);
-            }
+        function formatTime(sec) {
+            if (isNaN(sec)) return "0:00";
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
         }
 
-        async function downloadAllSongs() {
-            if (downloadingAll) return;
-            downloadingAll = true;
-            const btn = document.getElementById('downloadAllBtn');
-            btn.classList.add('downloading');
-            btn.innerHTML = '<span>â³</span><span>Ä°ndiriliyor... 0/' + songs.length + '</span>';
-            
-            dlProgressBar.style.display = 'block';
-
-            for (let i = 0; i < songs.length; i++) {
-                const song = songs[i];
-                try {
-                    btn.innerHTML = `<span>â¬‡ï¸</span><span>Ä°ndiriliyor... ${i + 1}/${songs.length}</span>`;
-                    dlProgressBar.style.width = ((i + 1) / songs.length * 100) + '%';
-
-                    const response = await fetch(song.url);
-                    const blob = await response.blob();
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = song.filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-
-                    // Cache it
-                    try {
-                        const cache = await caches.open(CACHE_NAME);
-                        await cache.put(song.url, new Response(blob.slice()));
-                    } catch (e) {}
-
-                    // Small delay to prevent browser from blocking rapid downloads
-                    await new Promise(r => setTimeout(r, 800));
-                } catch (error) {
-                    console.error(`Download failed: ${song.filename}`, error);
-                }
-            }
-
-            downloadingAll = false;
-            btn.classList.remove('downloading');
-            btn.innerHTML = '<span>â¬‡ï¸</span><span>TÃ¼m ÅarkÄ±larÄ± Ä°ndir</span>';
-            dlProgressBar.style.display = 'none';
-            dlProgressBar.style.width = '0%';
-            showToast('âœ… TÃ¼m indirmeler tamamlandÄ±!');
-            updateCacheStatus();
-            checkCacheForSongs();
-        }
-
-        // ===== CACHE MANAGEMENT =====
-        async function updateCacheStatus() {
-            try {
-                const cache = await caches.open(CACHE_NAME);
-                const keys = await cache.keys();
-                const mp3Keys = keys.filter(k => k.url.endsWith('.mp3'));
-                document.getElementById('cacheStatus').textContent = `Ã–nbellek: ${mp3Keys.length} ÅŸarkÄ±`;
-            } catch (e) {
-                document.getElementById('cacheStatus').textContent = 'Ã–nbellek: --';
-            }
-        }
-
-        async function checkCacheForSongs() {
-            try {
-                const cache = await caches.open(CACHE_NAME);
-                for (const song of songs) {
-                    const cached = await cache.match(song.url);
-                    const indicator = document.getElementById(`cache-${song.id}`);
-                    if (indicator) {
-                        indicator.classList.toggle('cached', !!cached);
-                    }
-                }
-            } catch (e) {}
-        }
-
-        // ===== UTILITY FUNCTIONS =====
-        function escapeHTML(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        let toastTimeout;
-        function showToast(msg) {
-            toastEl.textContent = msg;
-            toastEl.classList.add('show');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toastEl.classList.remove('show');
-            }, 2500);
-        }
-
-        // ===== SERVICE WORKER REGISTRATION =====
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {
-                // Service worker registration failed, but app will still work
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
             });
         }
     </script>
 </body>
 </html>
-
